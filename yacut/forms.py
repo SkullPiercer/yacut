@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, Length, URL
 
 from .constants import DATA_REQ_MESS, MAX_LENGTH, MIN_LENGTH
 
@@ -10,6 +10,7 @@ class URLForm(FlaskForm):
         validators=[
             DataRequired(message=DATA_REQ_MESS),
             Length(MIN_LENGTH, MAX_LENGTH),
+            URL(),
         ]
     )
     custom_id = StringField(
