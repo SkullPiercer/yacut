@@ -7,11 +7,8 @@ from .forms import URLForm
 
 from .models import URLMap
 from . import db
-import hashlib
+from .utils import shorten_url
 
-def shorten_url(url):
-    short_hash = hashlib.md5(url.encode()).hexdigest()[:8]
-    return f"http://127.0.0.1:5000/{short_hash}"
 
 @app.route('/', methods=['GET', 'POST'])
 def index_view():
