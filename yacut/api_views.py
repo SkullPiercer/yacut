@@ -13,17 +13,24 @@ def add_url():
     if data is None:
         raise InvalidAPIUsage('Отсутствует тело запроса')
 
-    data['original'] = data['url']
-    data['short'] = data.get('custom_id') or shorten_url(data['original'])
+    if 'url' not in data or data.get('url') is None:
+        raise InvalidAPIUsage('В запросе отсутствует поле с оригинальной ссылкой')
+
+    data['original'] = data.get('url')
+
+    if data.get('custom_id') is None or data.get('custom_id') == '':
+        data['short'] = shorten_url(data['original'])
+    else:
+        data['short'] = data.get('custom_id')
+
+    if URLMap.query.filter_by(short=data['short']).first() is not None:
+        raise InvalidAPIUsage('Предложенный вариант короткой ссылки уже существует.')
 
     if not is_valid_url(data['short']):
-        raise InvalidAPIUsage('Неверный формат короткой ссылки!')
+        raise InvalidAPIUsage('Указано недопустимое имя для короткой ссылки')
 
-    if len(data['short']) > MAX_LENGTH:
-        raise InvalidAPIUsage('Ваша ссылка длиннее 16 символов. Не соответствует спецификации')
-
-    if 'url' not in data:
-        raise InvalidAPIUsage('В запросе отсутствует поле с оригинальной ссылкой')
+    # if len(data['short']) > MAX_LENGTH:
+    #     raise InvalidAPIUsage('Ваша ссылка длиннее 16 символов. Не соответствует спецификации')
 
     if URLMap.query.filter_by(original=data['original']).first() is not None:
         raise InvalidAPIUsage('Эта ссылка уже есть в базе данных')
