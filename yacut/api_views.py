@@ -14,7 +14,7 @@ def add_url():
         raise InvalidAPIUsage('Отсутствует тело запроса')
 
     if 'url' not in data or data.get('url') is None:
-        raise InvalidAPIUsage('В запросе отсутствует поле с оригинальной ссылкой')
+        raise InvalidAPIUsage('"url" является обязательным полем!')
 
     data['original'] = data.get('url')
 
@@ -28,9 +28,6 @@ def add_url():
 
     if not is_valid_url(data['short']):
         raise InvalidAPIUsage('Указано недопустимое имя для короткой ссылки')
-
-    # if len(data['short']) > MAX_LENGTH:
-    #     raise InvalidAPIUsage('Ваша ссылка длиннее 16 символов. Не соответствует спецификации')
 
     if URLMap.query.filter_by(original=data['original']).first() is not None:
         raise InvalidAPIUsage('Эта ссылка уже есть в базе данных')
