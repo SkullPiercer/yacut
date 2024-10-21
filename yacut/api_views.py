@@ -20,7 +20,7 @@ def add_url():
     data['original'] = data.get('url')
 
     if data.get('custom_id') is None or data.get('custom_id') == '':
-        data['short'] =  shorten_url(data["original"])
+        data['short'] = shorten_url(data["original"])
 
     else:
 
