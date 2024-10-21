@@ -23,6 +23,9 @@ def add_url():
     else:
         data['short'] = data.get('custom_id')
 
+    if len(data['short']) >= MAX_LENGTH:
+        raise InvalidAPIUsage('Указано недопустимое имя для короткой ссылки')
+
     if URLMap.query.filter_by(short=data['short']).first() is not None:
         raise InvalidAPIUsage('Предложенный вариант короткой ссылки уже существует.')
 
