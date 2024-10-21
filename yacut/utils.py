@@ -7,6 +7,5 @@ def shorten_url(url):
     return short_hash
 
 def is_valid_url(url):
-    url_regex = re.compile(
-        r'^[A-Za-z0-9]+$', re.IGNORECASE)
+    url_regex = re.compile(r'^(?=.*[A-Za-z])[A-Za-z0-9]+$', re.IGNORECASE)
     return re.match(url_regex, url) is not None
