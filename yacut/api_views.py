@@ -38,3 +38,9 @@ def add_url():
     db.session.commit()
     return jsonify(url.to_dict()), 201
 
+@app.route('/api/id/<int:short_id>/', methods=['GET'])
+def get_original_url(short_id):
+    original = URLMap.query.get(short_id)
+    if original is None:
+        raise InvalidAPIUsage('Ссылки с указанным id не найдено', 404)
+    return jsonify(original.to_dict()), 200

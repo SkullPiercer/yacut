@@ -9,7 +9,7 @@ class URLForm(FlaskForm):
         'Длинная ссылка',
         validators=[
             DataRequired(message=DATA_REQ_MESS),
-            Length(MIN_LENGTH, MAX_LENGTH),
+            Length(MIN_LENGTH, 128),
             URL(),
         ]
     )
