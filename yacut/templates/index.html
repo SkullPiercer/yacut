@@ -44,7 +44,7 @@
                   {% for category, message in messages %}
                     {% if category == 'success' %}
                       <div class="alert alert-success">
-                        {{ message|safe }}
+                        <a href="http://localhost/{{ message }}">Короткая ссылка: {{ message }}</a>
                       </div>
                     {% elif category == 'error' %}
                       <div class="alert alert-danger">
