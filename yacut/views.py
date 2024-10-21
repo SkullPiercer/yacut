@@ -27,7 +27,7 @@ def index_view():
             new_url = URLMap(original=original_link, short=custom_id)
             db.session.add(new_url)
             db.session.commit()
-            flash(f'<a href="{original_link}" target="_blank">Короткая ссылка: {custom_id}</a>', 'success')
+            flash(f'<a href="{original_link}" target="_blank">Короткая ссылка: http://localhost/{custom_id}</a>', 'success')
 
     return render_template('index.html', form=form)
 

@@ -42,5 +42,5 @@ def add_url():
 def get_original_url(short_id):
     original = URLMap.query.filter_by(short=short_id).first()
     if original is None:
-        raise InvalidAPIUsage('Ссылки с указанным id не найдено', 404)
+        raise InvalidAPIUsage('Указанный id не найден', 404)
     return jsonify({'url': original.to_dict()['url']}), 200
