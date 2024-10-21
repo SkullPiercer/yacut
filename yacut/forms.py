@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired, Length, URL
 
 from .constants import DATA_REQ_MESS, MAX_LENGTH, MIN_LENGTH
 
+
 class URLForm(FlaskForm):
     original_link = URLField(
         'Длинная ссылка',

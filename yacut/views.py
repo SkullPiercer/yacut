@@ -1,12 +1,8 @@
-from random import randrange
-
 from flask import abort, flash, redirect, render_template, url_for
 
 from . import app, db
 from .forms import URLForm
-
 from .models import URLMap
-from . import db
 from .utils import shorten_url
 
 
@@ -22,7 +18,9 @@ def index_view():
         custom_id = form.custom_id.data or shorten_url(original_link)
 
         if URLMap.query.filter_by(short=custom_id).first():
-            flash('Предложенный вариант короткой ссылки уже существует.', 'error')
+            flash(
+                'Предложенный вариант короткой ссылки уже существует.', 'error'
+            )
         else:
             new_url = URLMap(original=original_link, short=custom_id)
             db.session.add(new_url)
@@ -35,5 +33,4 @@ def index_view():
 @app.route('/<short>', methods=['GET'])
 def redirect_to_url(short):
     url = URLMap.query.filter_by(short=short).first_or_404()
-
     return redirect(url.original)
