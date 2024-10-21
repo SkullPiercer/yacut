@@ -187,6 +187,7 @@ def test_generated_unique_short_id(json_data, client):
         )
     )
     unique_id = URLMap.query.filter_by(original=PY_URL).first()
+    print(f'Generated short ID: {unique_id.short}')
     assert unique_id, (
         f'Если POST-запрос к эндпоинту `{CREATE_SHORT_LINK_URL}` не '
         'содержит данных для поля `custom_id`, которкая ссылка должна '

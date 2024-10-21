@@ -20,7 +20,7 @@ def add_url():
     data['original'] = data.get('url')
 
     if data.get('custom_id') is None or data.get('custom_id') == '':
-        data['short'] = shorten_url(data['original'])
+        data['short'] =  shorten_url(data["original"])
 
     else:
 
@@ -30,14 +30,13 @@ def add_url():
         if not is_valid_url(data['custom_id']):
             raise InvalidAPIUsage('Указано недопустимое имя для короткой ссылки')
 
-        data['short'] = data.get('custom_id')
+        data['short'] = data.get("custom_id")
 
     if URLMap.query.filter_by(short=data['short']).first() is not None:
         raise InvalidAPIUsage('Предложенный вариант короткой ссылки уже существует.')
 
     if URLMap.query.filter_by(original=data['original']).first() is not None:
         raise InvalidAPIUsage('Эта ссылка уже есть в базе данных')
-
     url = URLMap()
     url.from_dict(data)
     db.session.add(url)
