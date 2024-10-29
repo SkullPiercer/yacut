@@ -1,10 +1,11 @@
 import hashlib
 import re
 
+from .constants import URL_LEN
+
 
 def shorten_url(url):
-    short_hash = hashlib.md5(url.encode()).hexdigest()[:6]
-    return short_hash
+    return hashlib.md5(url.encode()).hexdigest()[:URL_LEN]
 
 
 def is_valid_url(url):
