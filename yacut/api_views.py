@@ -1,4 +1,5 @@
 from flask import jsonify, request
+from http import HTTPStatus
 
 from . import app, db
 from .constants import MAX_LENGTH
@@ -47,12 +48,12 @@ def add_url():
     url.from_dict(data)
     db.session.add(url)
     db.session.commit()
-    return jsonify(url.to_dict()), 201
+    return jsonify(url.to_dict()), HTTPStatus.CREATED
 
 
 @app.route('/api/id/<string:short_id>/', methods=['GET'])
 def get_original_url(short_id):
     original = URLMap.query.filter_by(short=short_id).first()
     if original is None:
-        raise InvalidAPIUsage('Указанный id не найден', 404)
-    return jsonify({'url': original.to_dict()['url']}), 200
+        raise InvalidAPIUsage('Указанный id не найден', HTTPStatus.NOT_FOUND)
+    return jsonify({'url': original.to_dict()['url']}), HTTPStatus.OK
